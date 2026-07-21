@@ -195,13 +195,38 @@ static void test_flags_valid() {
   check(ar49::decodeFrame(buf, 3, cfg).valid == false, "frame curto -> valid false");
 }
 
-int main() {
+// Executa todas as fatias; cada asserção imprime [PASS]/[FAIL] e acumula em g_fail.
+static void run_all_slices() {
   test_getBits();
   test_crc6();
   test_decode();
   test_angle_turns();
   test_crc_corruption();
   test_flags_valid();
+}
+
+#if defined(PIO_UNIT_TESTING) || defined(UNIT_TESTING)
+// Caminho PlatformIO `pio test -e native` (framework Unity, embutido). O Unity fornece
+// o fluxo via UNITY_BEGIN/RUN_TEST/UNITY_END; um único caso agrega as fatias e falha se
+// houver qualquer [FAIL]. As linhas [PASS]/[FAIL] continuam saindo no stdout.
+#include <unity.h>
+void setUp(void) {}     // Unity exige que existam (podem ficar vazias)
+void tearDown(void) {}
+static void test_ar49_core(void) {
+  run_all_slices();
+  TEST_ASSERT_EQUAL_INT(0, g_fail);  // 0 falhas em todas as fatias
+}
+int main(void) {
+  UNITY_BEGIN();
+  RUN_TEST(test_ar49_core);
+  return UNITY_END();
+}
+#else
+// Caminho standalone g++ (exigência do spec): main próprio, sem dependências externas.
+//   g++ -O2 -std=c++17 -Wall -Wextra -o test_parse test/test_parse.cpp && ./test_parse
+int main() {
+  run_all_slices();
   std::printf("\n%s (%d falha(s))\n", g_fail ? "RESULTADO: FAIL" : "RESULTADO: PASS", g_fail);
   return g_fail ? 1 : 0;
 }
+#endif
