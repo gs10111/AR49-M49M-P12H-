@@ -14,8 +14,8 @@
 //   Encoder            ESP32 — perfil DiEletrons DMB-DI231765 (default)   | bancada
 //   -----------------------------------------------------------------------|--------
 //   CLK   (via 4) ───► GPIO21 (SCK)          direto                        | GPIO18
-//   MOSI  (via 6) ───► GPIO22 (MOSI)         direto                        | GPIO23
-//   NCS   (via 3) ───► GPIO33 (NCS)          direto                        | GPIO5
+//   NCS   (via 3) ───► GPIO22 (NCS)          direto                        | GPIO5
+//   MOSI  (via 6) ───► GPIO33 (MOSI)         direto                        | GPIO23
 //   MISO  (via 5) ──[LEVEL SHIFTER 5V→3V3]─► GPIO35 (MISO, só-entrada)     | GPIO19
 //   +5V   (via 1) ───► 5V     GND (via 2) ─► GND
 #include <Arduino.h>
@@ -29,8 +29,8 @@
 #if defined(AR49_BOARD_DIELETRONS)
 // Placa DiEletrons DMB-DI231765 (reaproveitando as 4 linhas do "CND"):
 constexpr int8_t PIN_SCK  = 21;
-constexpr int8_t PIN_MOSI = 22;
-constexpr int8_t PIN_NCS  = 33;
+constexpr int8_t PIN_NCS  = 22;
+constexpr int8_t PIN_MOSI = 33;
 constexpr int8_t PIN_MISO = 35;   // GPIO34/35/36/39 são só-entrada (ok p/ MISO), via level shifter
 #else
 // Bancada / protótipo (VSPI padrão):
