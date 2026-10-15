@@ -15,8 +15,8 @@ namespace ar49 {
 
 // --- Constantes travadas pelo datasheet/AN (sem números mágicos soltos) ---
 constexpr uint8_t AR49_OC_POSITION_READ = 0xA6;  // operation command de leitura de posição
-constexpr uint8_t AR49_DEFAULT_MT_BITS  = 24;    // multivolta (Table 7, padrão M49M)
-constexpr uint8_t AR49_DEFAULT_ST_BITS  = 25;    // volta única (Table 7, padrão M49M)
+constexpr uint8_t AR49_DEFAULT_MT_BITS  = 24;    // multivolta (DS101 Table 1, padrão M49M)
+constexpr uint8_t AR49_DEFAULT_ST_BITS  = 25;    // volta única (DS101 Table 1, padrão M49M)
 constexpr uint8_t AR49_DEFAULT_CRC_BITS = 6;     // CRC "Basic" (há opção de 16)
 constexpr uint8_t AR49_CRC6_POLY_TAPS   = 0x03;  // G(X)=X^6+X^1+1 => taps X^1+X^0
 constexpr uint8_t AR49_OC_ECHO_BITS     = 8;     // eco do comando nos 8 primeiros clocks

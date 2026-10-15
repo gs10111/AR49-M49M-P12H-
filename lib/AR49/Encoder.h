@@ -7,7 +7,8 @@
 // │ Ligar isso DIRETO num GPIO do ESP32 (3,3 V, NÃO 5 V-tolerante) danifica o pino.│
 // │ => Use um level shifter 5 V→3,3 V na linha MISO.                              │
 // │ CLK/MOSI/NCS podem ir diretos: o encoder exige V_IH = 2,8 V e 3,3 V > 2,8 V.   │
-// │ (Na placa DiEletrons os buffers 74HC245 em 3,3 V TAMBÉM não são 5 V-tolerantes.)│
+// │ (Na DMB-DI231765 os buffers 74HC245 em 3,3 V TAMBÉM não são 5 V-tolerantes; na │
+// │ PAEAT-DI261941 o TXB0104 já converte — com OE em HIGH.)                       │
 // └─────────────────────────────────────────────────────────────────────────────┘
 //
 // Arquitetura (SOLID): a decodificação do frame (getBits/crc6/decodeFrame/ângulo/voltas)
@@ -34,7 +35,7 @@ public:
   double angleDeg(const AR49Reading& r) const;   // 0..360° dentro da volta
   double totalTurns(const AR49Reading& r) const; // MT + fração da volta
 
-  void setResolution(uint8_t mtBits, uint8_t stBits);  // padrão 24, 25 (Table 7)
+  void setResolution(uint8_t mtBits, uint8_t stBits);  // padrão 24, 25 (DS101 Table 1)
   void setCrcBits(uint8_t crcBits);                     // 6 (padrão) ou 16
   void setStrictCrc(bool strict);                       // true => valid exige crcOk
 
